@@ -1,4 +1,5 @@
 ﻿#include <iostream>
+#include <fstream>
 #include <string>
 #include <cstdlib>
 using namespace std;
@@ -25,9 +26,9 @@ struct USER
     SUBSCRIBTION SUB;
 }users[10];
 
+void main_menu();
 void REGISTRATION();
 void LOG_IN();
-void main_menu();
 void user_menu();
 void Purchase_sub();
 void choice_subs();
@@ -43,7 +44,9 @@ int main()
 
     main_menu();
     return 0;
-}void main_menu()
+}
+
+void main_menu()
 {
 
     int choice;
@@ -69,12 +72,13 @@ int main()
             break;
         default:
             system("cls"); // Use appropriate clear screen command for your OS.
-            cout << "Please select from the options given above\n";
+            cout << "Please select from the given options\n";
         }
     }
 }
 
 int index = 0;
+
 void REGISTRATION()
 {
     system("cls");
