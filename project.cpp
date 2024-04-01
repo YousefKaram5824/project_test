@@ -1,11 +1,7 @@
 ﻿#include <iostream>
-#include <fstream>
 #include <string>
 #include <cstdlib>
 using namespace std;
-
-//test/////test//
-
 
 struct DATE
 {
@@ -15,25 +11,25 @@ struct SUBSCRIBTION
 {
     string type;
     DATE START_date, END_date;
-    int rides, stage;
+    int rides = 0, stage = 0;
 };
 struct USER
 {
     string  name, password;
-    char type; //D for admin C for customer
-    int id;
+    char type = 0; //D for admin C for customer
+    int id = 0;
     float balance = 0;
     SUBSCRIBTION SUB;
 }users[10];
 
-void main_menu();
 void REGISTRATION();
 void LOG_IN();
+void main_menu();
 void user_menu();
 void Purchase_sub();
 void choice_subs();
 void uptade_balance();
-void stage();
+void show_inf();
 
 
 int main()
@@ -56,7 +52,7 @@ void main_menu()
         cout << "Press [1] to REGISTER \n";
         cout << "Press [2] to LOGIN\n";
         cout << "Press [3] to EXIT\n";
-        cout << "Please enter your choice : ";
+        cout << "Please enter your choice: ";
         cin >> choice;
 
         switch (choice)
@@ -72,13 +68,12 @@ void main_menu()
             break;
         default:
             system("cls"); // Use appropriate clear screen command for your OS.
-            cout << "Please select from the given options\n";
+            cout << "Please select from the options given above\n";
         }
     }
 }
 
 int index = 0;
-
 void REGISTRATION()
 {
     system("cls");
@@ -94,6 +89,7 @@ void REGISTRATION()
     cout << "your id is :" << users[index].id << endl;
     index++;
 }
+
 int login_index = -1;
 void LOG_IN()
 {
@@ -114,7 +110,10 @@ void LOG_IN()
             {
                 found = true;
                 cout << "Login successful!\n"
-                    << "WLCOME " << users[i].name << endl;
+                    << "===================\n"
+                    << "   WLCOME " << users[i].name << endl
+                    << "===================\n";
+
                 login_index = i;
                 user_menu();
                 return;
@@ -132,7 +131,9 @@ void user_menu()
 {
 
     int choice;
-    cout << "enter 1 to Purchase_sub\n";
+    cout << "Enter [1] to Purchase_sub\n";
+    cout << "Enter [2] to show your informations\n";
+    cout << "Enter [3] to show uptade your balance\n";
     cout << "please enter : ";
     cin >> choice;
 
@@ -141,11 +142,15 @@ void user_menu()
     case 1:
         Purchase_sub();
         break;
+    case 2:
+        show_inf();
+        break;
+    case 3:
+        uptade_balance();
+        break;
     default:
         break;
     }
-
-
 
 }
 
@@ -192,7 +197,6 @@ void Purchase_sub()
 
 }
 
-
 void choice_subs()
 {
     int choice;
@@ -205,12 +209,100 @@ void choice_subs()
     case 1:
         users[login_index].SUB.type = "students";
         users[login_index].SUB.END_date.month += 3;
-        stage();
-        cout << "you joined this subscribtion sucssecfully";
+        int stage_std;
+        cout << "select which stage\n(1) or (2) or (3) or (4) : ";
+        cin >> stage_std;
+
+        switch (stage_std)
+        {
+        case 1:
+            if (users[login_index].balance < 33)
+            {
+                cout << "recharge your wallet first\n";
+                user_menu();
+
+            }
+            users[login_index].balance -= 33;
+            break;
+        case 2:
+            if (users[login_index].balance < 41)
+            {
+                cout << "recharge your wallet first\n";
+                user_menu();
+            }
+            users[login_index].balance -= 41;
+            break;
+        case 3:
+            if (users[login_index].balance < 50)
+            {
+                cout << "recharge your wallet first\n";
+                user_menu();
+            }
+            users[login_index].balance -= 50;
+            break;
+        case 4:
+            if (users[login_index].balance < 65)
+            {
+                cout << "recharge your wallet first\n";
+                user_menu();
+            }
+            users[login_index].balance -= 65;
+            break;
+        default:
+
+            break;
+        }
+
+        users[login_index].SUB.rides = 180;
+        cout << "\nyou joined students subscribtion sucssecfully\n\n";
         break;
     case 2:
         users[login_index].SUB.type = "public";
+        users[login_index].SUB.END_date.month += 1;
+        int stage_pub;
+        cout << "select which stage\n(1) or (2) or (3) or (4) : ";
+        cin >> stage_pub;
 
+        switch (stage_pub)
+        {
+        case 1: //(230, 290, 340 & 450
+            if (users[login_index].balance < 230)
+            {
+                cout << "recharge your wallet first\n";
+                user_menu();
+            }
+            users[login_index].balance -= 230;
+            break;
+        case 2:
+            if (users[login_index].balance < 290)
+            {
+                cout << "recharge your wallet first\n";
+                user_menu();
+            }
+            users[login_index].balance -= 290;
+            break;
+        case 3:
+            if (users[login_index].balance < 340)
+            {
+                cout << "recharge your wallet first\n";
+                user_menu();
+            }
+            users[login_index].balance -= 340;
+            break;
+        case 4:
+            if (users[login_index].balance < 450)
+            {
+                cout << "recharge your wallet first\n";
+                user_menu();
+            }
+            users[login_index].balance -= 450;
+            break;
+        default:
+
+            break;
+        }
+        users[login_index].SUB.rides = 60;
+        cout << "\nyou joined students subscribtion sucssecfully\n\n";
         break;
     case 3:
         users[login_index].SUB.type = "cash";
@@ -226,53 +318,29 @@ void choice_subs()
 void uptade_balance()
 {
     int add_balance;
-    cout << "add your balance : ";
+    cout << "\n add your balance : ";
     cin >> add_balance;
     users[login_index].balance += add_balance;
 }
 
-void stage()
+void show_inf()
 {
-    int stage;
-    cout << "select which stage\n(1) or (2) or (3) or (4) : ";
-    cin >> stage;
-    switch (stage)
-    {
-    case 1:
-        if (users[login_index].balance < 33)
-        {
-            cout << "recharge your wallet first";
-            uptade_balance();
-        }
-        users[login_index].balance -= 33;
-        break;
-    case 2:
-        if (users[login_index].balance < 41)
-        {
-            cout << "recharge your wallet first";
-            uptade_balance();
-        }
-        users[login_index].balance -= 41;
-        break;
-    case 3:
-        if (users[login_index].balance < 50)
-        {
-            cout << "recharge your wallet first";
-            uptade_balance();
-        }
-        users[login_index].balance -= 50;
-        break;
-    case 4:
-        if (users[login_index].balance < 65)
-        {
-            cout << "recharge your wallet first";
-            uptade_balance();
-        }
-        users[login_index].balance -= 65;
-        break;
-    default:
+    system("cls");
+    cout << "\t\t\t=====================\n"
+        << "\t\t\tpersonal informations\n"
+        << "\t\t\t=====================\n"
+        << "User name   : " << users[login_index].name << endl
+        << "pasword     : " << users[login_index].password << endl
+        << "subcribtion : " << users[login_index].SUB.type << endl
+        << "start date  : " << users[login_index].SUB.START_date.day
+        << " / " << users[login_index].SUB.START_date.month
+        << " / " << users[login_index].SUB.START_date.year << endl
+        << "end date    : " << users[login_index].SUB.END_date.day
+        << " / " << users[login_index].SUB.END_date.month
+        << " / " << users[login_index].SUB.END_date.year << endl
+        << "balance     : " << users[login_index].balance;
 
-        break;
-    }
+
+
 
 }
